@@ -7,12 +7,11 @@ import sys
 
 
 def main():
-    #grab_Data([2024], [9])
+    grab_Data([2024], [8,9])
     #grab_Data([2024], list(range(1, 13)))
-    #write_Data_Minio()
-    baseDir = os.path.abspath("../../data/raw")
-    for root, _, files in os.walk(baseDir):
-        print(root, '#####', files)
+    write_Data_Minio()
+    
+  
 
 
 

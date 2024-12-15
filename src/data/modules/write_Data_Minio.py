@@ -18,7 +18,7 @@ def write_Data_Minio():
         secret_key="minioadmin123"
     )
 
-    bucket = "ALT-Datamart-Bucket"  # 
+    bucket = "alt-datamart-bucket"  # 
     # Create the bucket if it doesn't exist
     if not minioClient.bucket_exists(bucket):
         minioClient.make_bucket(bucket)
@@ -28,21 +28,16 @@ def write_Data_Minio():
     # Path to the folder containing the files
     baseDir = os.path.abspath("../../data/raw")
 
+
     # Iterate through all files in the folder and upload them
-    for root, _, files in os.walk(baseDir): 
+    for root, _, files in os.walk(baseDir):  # Ignore dirs by replacing it with '_'
         for file in files:
             file_path = os.path.join(root, file)
             object_name = os.path.relpath(file_path, baseDir)  # Preserve folder structure
 
             try:
-                # Define the progress callback function inside the try block
-                def progress_callback(file_path, bytes_transferred, total_size):
-                    percentage = (bytes_transferred / total_size) * 100
-                    # Print the progress on the same line
-                    print(f"Uploading {file_path}: {percentage:.2f}%", end='\r', flush=True)
-
                 # Upload the file to MinIO with progress tracking
-                minioClient.fput_object(bucket, object_name, file_path, progress=progress_callback)
+                minioClient.fput_object(bucket, object_name, file_path)
                 print(f"\nUploaded: {file_path} as {object_name}")
 
             except Exception as e:
