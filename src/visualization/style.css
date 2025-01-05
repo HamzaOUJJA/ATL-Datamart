@@ -1,0 +1,37 @@
+/* Style the title */
+.css-18e3th9 {
+    font-family: 'Arial', sans-serif;
+    color: #4CAF50;
+    font-size: 3rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Sidebar style */
+.css-1d391kg {
+    background-color: #f0f0f5;
+    padding: 20px;
+}
+
+/* Style for Dataframe table */
+.css-1v3fvcr {
+    background-color: #fafafa;
+    border-radius: 10px;
+}
+
+/* General Metrics styling */
+.stMetric {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Styling for plots */
+.stPlotlyChart {
+    margin-top: 20px;
+    background-color: #f7f7f9;
+    border-radius: 10px;
+    padding: 10px;
+}
