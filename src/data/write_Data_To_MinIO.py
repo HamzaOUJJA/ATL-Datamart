@@ -43,7 +43,8 @@ def write_Data_To_MinIO():
                     return 0
         return 1
     except Exception as e:
-        print(f"Problem Occured While Uploading Data To MinIO : {e}")
+        print("\033[1;31m ###### Problem Occured While Uploading Data To MinIO ######\033[0m")
+        print(e)
         return 0
 
 

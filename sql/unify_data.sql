@@ -3,43 +3,43 @@ DROP TABLE IF EXISTS warehouse_data;
 
 CREATE TABLE warehouse_data (
     "trip_id"               SERIAL PRIMARY KEY,
-    "vehicul_type"          VARCHAR(50),        -- green    yellow  fhv fhvhv
-    "pickup_datetime"       TIMESTAMP,          -- green    yellow  fhv fhvhv
-    "dropoff_datetime"      TIMESTAMP,          -- green    yellow  fhv fhvhv
-    "PULocationID"          INT,                -- green    yellow  fhv fhvhv
-    "DOLocationID"          INT,                -- green    yellow  fhv fhvhv
+    "vehicul_type"          TEXT,                   -- green    yellow  fhv fhvhv
+    "pickup_datetime"       TEXT,                   -- green    yellow  fhv fhvhv
+    "dropoff_datetime"      TEXT,                   -- green    yellow  fhv fhvhv
+    "PULocationID"          TEXT,                   -- green    yellow  fhv fhvhv
+    "DOLocationID"          TEXT,                   -- green    yellow  fhv fhvhv
 
-    "trip_type"             INT,                -- green
-    "ehail_fee"	            TEXT,               -- green
-    "VendorID"              INT,                -- green    yellow
-    "passenger_count"       INT,                -- green    yellow
-    "trip_distance"         FLOAT,              -- green    yellow      fhvhv
-    "extra"                 FLOAT,              -- green    yellow
-    "store_and_fwd_flag"	TEXT,               -- green    yellow
-    "RatecodeID"	        INT,                -- green    yellow
-    "improvement_surcharge" INT,                -- green    yellow
-    "payment_type"          INT,                -- green    yellow
-    "total_fare"            FLOAT,              -- green    yellow      fhvhv
-    "fare"                  FLOAT,              -- green    yellow      fhvhv
-    "tolls_amount"          FLOAT,              -- green    yellow      fhvhv
-    "mta_tax"               FLOAT,              -- green    yellow      fhvhv
-    "tip_amount"            FLOAT,              -- green    yellow      fhvhv
-    "congestion_surcharge"  FLOAT,              -- green    yellow      fhvhv
-    "airport_fee"           FLOAT,              --          yellow      fhvhv
-    "hvfhs_license_num"     VARCHAR(50),        --                      fhvhv
-    "originating_base_num"  VARCHAR(50),        --                      fhvhv
-    "request_datetime"      TIMESTAMP,          --                      fhvhv
-    "on_scene_datetime"     TIMESTAMP,          --                      fhvhv
-    "trip_time"             INT,                --                      fhvhv
-    "bcf"                   FLOAT,              --                      fhvhv
-    "shared_request_flag"   TEXT,               --                      fhvhv
-    "shared_match_flag"     TEXT,               --                      fhvhv
-    "access_a_ride_flag"	TEXT,               --                      fhvhv
-    "wav_request_flag"	    TEXT,               --                      fhvhv
-    "wav_match_flag"        TEXT,               --                      fhvhv
-    "dispatching_base_num"  VARCHAR(50),        --                  fhv fhvhv
-    "SR_Flag"               INT,                --                  fhv
-    "Affiliated_base_number"VARCHAR(50)         --                  fhv
+    "trip_type"             TEXT,                   -- green
+    "ehail_fee"	            TEXT,                   -- green
+    "VendorID"              TEXT,                   -- green    yellow
+    "passenger_count"       TEXT,                   -- green    yellow
+    "trip_distance"         TEXT,                   -- green    yellow      fhvhv
+    "extra"                 TEXT,                   -- green    yellow
+    "store_and_fwd_flag"	TEXT,                   -- green    yellow
+    "RatecodeID"	        TEXT,                   -- green    yellow
+    "improvement_surcharge" TEXT,                   -- green    yellow
+    "payment_type"          TEXT,                   -- green    yellow
+    "total_fare"            TEXT,                   -- green    yellow      fhvhv
+    "fare"                  TEXT,                   -- green    yellow      fhvhv
+    "tolls_amount"          TEXT,                   -- green    yellow      fhvhv
+    "mta_tax"               TEXT,                   -- green    yellow      fhvhv
+    "tip_amount"            TEXT,                   -- green    yellow      fhvhv
+    "congestion_surcharge"  TEXT,                   -- green    yellow      fhvhv
+    "airport_fee"           TEXT,                   --          yellow      fhvhv
+    "hvfhs_license_num"     TEXT,                   --                      fhvhv
+    "originating_base_num"  TEXT,                   --                      fhvhv
+    "request_datetime"      TEXT,                   --                      fhvhv
+    "on_scene_datetime"     TEXT,                   --                      fhvhv
+    "trip_time"             TEXT,                   --                      fhvhv
+    "bcf"                   TEXT,                   --                      fhvhv
+    "shared_request_flag"   TEXT,                   --                      fhvhv
+    "shared_match_flag"     TEXT,                   --                      fhvhv
+    "access_a_ride_flag"	TEXT,                   --                      fhvhv
+    "wav_request_flag"	    TEXT,                   --                      fhvhv
+    "wav_match_flag"        TEXT,                   --                      fhvhv
+    "dispatching_base_num"  TEXT,                   --                  fhv fhvhv
+    "SR_Flag"               TEXT,                   --                  fhv
+    "Affiliated_base_number"TEXT                    --                  fhv
 );
 
 
@@ -75,10 +75,10 @@ SELECT
     "hvfhs_license_num",
     "dispatching_base_num",
     "originating_base_num",
-    "request_datetime"::TIMESTAMP,
-    "on_scene_datetime"::TIMESTAMP, 
-    "pickup_datetime"::TIMESTAMP, 
-    "dropoff_datetime"::TIMESTAMP, 
+    "request_datetime",
+    "on_scene_datetime", 
+    "pickup_datetime", 
+    "dropoff_datetime", 
     "PULocationID", 
     "DOLocationID", 
     "trip_miles", 
@@ -113,11 +113,11 @@ INSERT INTO warehouse_data (
 SELECT 
     'fhv', 
     "dispatching_base_num",
-    "pickup_datetime"::TIMESTAMP, 
-    "dropOff_datetime"::TIMESTAMP, 
+    "pickup_datetime", 
+    "dropOff_datetime", 
     "PUlocationID", 
     "DOlocationID", 
-    "SR_Flag"::INTEGER,
+    "SR_Flag",
     "Affiliated_base_number"
 FROM "fhv_tripdata_2024-10";
 
@@ -147,8 +147,8 @@ INSERT INTO warehouse_data (
 SELECT 
     'yellow',
     "VendorID", 
-    "tpep_pickup_datetime"::TIMESTAMP, 
-    "tpep_dropoff_datetime"::TIMESTAMP, 
+    "tpep_pickup_datetime", 
+    "tpep_dropoff_datetime", 
     "passenger_count", 
     "trip_distance", 
     "RatecodeID",
@@ -176,7 +176,7 @@ INSERT INTO warehouse_data (
     "passenger_count", "trip_distance", "fare", "extra", "mta_tax", "tip_amount", "tolls_amount", 
     "ehail_fee", "improvement_surcharge", "total_fare", "payment_type", "trip_type", "congestion_surcharge")
 SELECT 
-    'green', "VendorID", "lpep_pickup_datetime"::TIMESTAMP, "lpep_dropoff_datetime"::TIMESTAMP, "store_and_fwd_flag", "RatecodeID", 
+    'green', "VendorID", "lpep_pickup_datetime", "lpep_dropoff_datetime", "store_and_fwd_flag", "RatecodeID", 
     "PULocationID", "DOLocationID", "passenger_count", "trip_distance", "fare_amount", "extra", "mta_tax", "tip_amount", 
     "tolls_amount", "ehail_fee", "improvement_surcharge", "total_amount", "payment_type", "trip_type", "congestion_surcharge"
 FROM "green_tripdata_2024-10";

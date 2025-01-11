@@ -11,17 +11,17 @@ from psycopg2 import sql
 # Connection details for warehouse and datamart
 warehouse_conn = psycopg2.connect(
     dbname="nyc_warehouse",
-    user="airflow",
-    password="airflow",
+    user="postgres",
+    password="admin",
     host="localhost",
-    port="15433"
+    port="15432"
 )
 mart_conn = psycopg2.connect(
     dbname="nyc_datamart",
     user="postgres",
     password="admin",
     host="localhost",
-    port="15432"
+    port="15435"
 )
 
 
@@ -40,7 +40,8 @@ def unify_data():
         execute_sql_file(mart_conn, '../../sql/unify_data.sql')
         return 1
     except Exception as e:
-        print(f"Problem occured : {e}")
+        print("\033[1;31m ###### Problem Occured While Unifying Data In Datamart ######\033[0m")
+        print(e)
         return 0
 
 
@@ -69,7 +70,7 @@ def warehouse_to_datamart():
             # Step 2.2: Check if table exists in the data mart
             mart_cursor.execute(sql.SQL("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = %s)"), [table_name])
             table_exists = mart_cursor.fetchone()[0]
-
+            
             if not table_exists:
                 # Create the table in the data mart if it doesn't exist
                 column_definitions = ", ".join([f'"{col[0]}" {col[1]}' for col in columns])
@@ -86,13 +87,13 @@ def warehouse_to_datamart():
                 sql.SQL(", ").join([sql.Identifier(col[0]) for col in columns]),
                 sql.SQL(", ").join([sql.Placeholder()] * len(columns))
             )
-            
+
             # Insert data in chunks (to avoid memory overflow for large tables)
             chunk_size = 1000
             for i in range(0, len(rows), chunk_size):
                 chunk = rows[i:i+chunk_size]
                 mart_cursor.executemany(insert_query, chunk)
-            
+
             mart_conn.commit()
 
         # Close connections
@@ -102,7 +103,8 @@ def warehouse_to_datamart():
         return 1
     
     except Exception as e:
-        print(f"Problem occured : {e}")
+        print("\033[1;31m ###### Problem Occured While Moving Data To Datamart ######\033[0m")
+        print(e)
         return 0
 
 

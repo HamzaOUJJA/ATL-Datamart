@@ -1,3 +1,10 @@
+########################################## 
+###  
+##########################################
+
+
+
+
 import streamlit as st
 import pandas as pd
 import psycopg2
@@ -43,7 +50,7 @@ def fetch_data(query):
 
 # Main dashboard
 def main():
-    st.title("Comprehensive Datamart Visualization Dashboard")
+    st.title("Visualization Dashboard")
     st.sidebar.title("Filters")
 
     # Filter Inputs

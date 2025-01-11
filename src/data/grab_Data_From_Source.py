@@ -46,5 +46,6 @@ def grab_Data_From_Source(years: list = [2024], months: list = [10], trip_types:
                 return 0
         return 1
     except Exception as e:
-        print(f"Problem Occured While Downloading Data From Internet : {e}")
+        print("\033[1;31m ###### Problem Occured While Downloading Data From Internet ######\033[0m")
+        print(e)
         return 0

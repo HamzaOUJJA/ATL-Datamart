@@ -13,7 +13,7 @@ mart_conn = psycopg2.connect(
     user="postgres",
     password="admin",
     host="localhost",
-    port="15432"
+    port="15435"
 )
 
 
@@ -24,7 +24,8 @@ def create_Marts():
         execute_sql_file(mart_conn, '../../sql/creation.sql')
         return 1
     except Exception as e:
-        print(f"Problem occured : {e}")
+        print("\033[1;31m ###### Problem Occured While Creating Marts ######\033[0m")
+        print(e)
         return 0
 
 
@@ -37,7 +38,8 @@ def insert_Marts():
         mart_conn.close()
         return 1
     except Exception as e:
-        print(f"Problem occured : {e}")
+        print("\033[1;31m ###### Problem Occured While Inserting Data To Marts! ######\033[0m")
+        print(e)
         return 0
 
 

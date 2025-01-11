@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS fact_trip, dim_location, dim_datetime, dim_flags, dim_base,
 
 CREATE TABLE fact_trip (
     "trip_id"               SERIAL PRIMARY KEY,  
-    "vehicul_type"          VARCHAR(50),
+    "vehicul_type"          TEXT,
     "location_id"           INT,
     "datetime_id"           INT,         
     "fare_id"               INT, 
@@ -13,42 +13,42 @@ CREATE TABLE fact_trip (
 CREATE TABLE dim_location (
     "location_id"           INT PRIMARY KEY,
     "trip_id"               INT,
-    "PULocationID"          INT,
-    "DOLocationID"          INT
+    "PULocationID"          TEXT,
+    "DOLocationID"          TEXT
 );
 CREATE TABLE dim_datetime (
     "datetime_id"           INT PRIMARY KEY,
     "trip_id"               INT,
-    "pickup_datetime"       TIMESTAMP,           
-    "dropoff_datetime"      TIMESTAMP,
-    "request_datetime"      TIMESTAMP,          --                      fhvhv
-    "on_scene_datetime"     TIMESTAMP           --                      fhvhv
+    "pickup_datetime"       TEXT,           
+    "dropoff_datetime"      TEXT,
+    "request_datetime"      TEXT,          --                      fhvhv
+    "on_scene_datetime"     TEXT           --                      fhvhv
 );
 CREATE TABLE dim_fare ( 
     "fare_id"               INT PRIMARY KEY, 
     "trip_id"               INT,  
-    "total_fare"            FLOAT,              -- green    yellow      fhvhv
-    "fare"                  FLOAT,              -- green    yellow      fhvhv
-    "improvement_surcharge" INT,                -- green    yellow
-    "extra"                 FLOAT,              -- green    yellow
-    "tolls_amount"          FLOAT,              -- green    yellow      fhvhv
-    "mta_tax"               FLOAT,              -- green    yellow      fhvhv
-    "tip_amount"            FLOAT,              -- green    yellow      fhvhv
-    "congestion_surcharge"  FLOAT,              -- green    yellow      fhvhv
-    "airport_fee"           FLOAT,              --          yellow      fhvhv
+    "total_fare"            TEXT,              -- green    yellow      fhvhv
+    "fare"                  TEXT,              -- green    yellow      fhvhv
+    "improvement_surcharge" TEXT,                -- green    yellow
+    "extra"                 TEXT,              -- green    yellow
+    "tolls_amount"          TEXT,              -- green    yellow      fhvhv
+    "mta_tax"               TEXT,              -- green    yellow      fhvhv
+    "tip_amount"            TEXT,              -- green    yellow      fhvhv
+    "congestion_surcharge"  TEXT,              -- green    yellow      fhvhv
+    "airport_fee"           TEXT,              --          yellow      fhvhv
     "ehail_fee"	            TEXT,                -- green
-    "bcf"                   FLOAT,              --                      fhvhv
-    "payment_type"          INT                 -- green    yellow
+    "bcf"                   TEXT,              --                      fhvhv
+    "payment_type"          TEXT                 -- green    yellow
 );
 CREATE TABLE dim_trip_details (  
     "details_id"            INT PRIMARY KEY,
     "trip_id"               INT,
-    "trip_type"             INT,                -- green 
-    "VendorID"              INT,                -- green    yellow
-    "passenger_count"       INT,                -- green    yellow
-    "trip_distance"         FLOAT,              -- green    yellow      fhvhv
-    "RatecodeID"	        INT,                -- green    yellow
-    "trip_time"             INT                 --                      fhvhv
+    "trip_type"             TEXT,                -- green 
+    "VendorID"              TEXT,                -- green    yellow
+    "passenger_count"       TEXT,                -- green    yellow
+    "trip_distance"         TEXT,              -- green    yellow      fhvhv
+    "RatecodeID"	        TEXT,                -- green    yellow
+    "trip_time"             TEXT                 --                      fhvhv
 );
 CREATE TABLE dim_flags (
     "flags_id"              INT PRIMARY KEY,
@@ -59,15 +59,15 @@ CREATE TABLE dim_flags (
     "wav_request_flag"	    TEXT,               --                      fhvhv
     "wav_match_flag"        TEXT,               --                      fhvhv
     "store_and_fwd_flag"	TEXT,               -- green    yellow
-    "SR_Flag"               INT                 --                  fhv
+    "SR_Flag"               TEXT                 --                  fhv
 );
 CREATE TABLE dim_base (
     "base_id"               INT PRIMARY KEY,
     "trip_id"               INT,
-    "hvfhs_license_num"     VARCHAR(50),        --                      fhvhv
-    "originating_base_num"  VARCHAR(50),        --                      fhvhv
-    "dispatching_base_num"  VARCHAR(50),        --                  fhv fhvhv
-    "Affiliated_base_number"VARCHAR(50)         --                  fhv
+    "hvfhs_license_num"     TEXT,        --                      fhvhv
+    "originating_base_num"  TEXT,        --                      fhvhv
+    "dispatching_base_num"  TEXT,        --                  fhv fhvhv
+    "Affiliated_base_number"TEXT         --                  fhv
 );
 
 
