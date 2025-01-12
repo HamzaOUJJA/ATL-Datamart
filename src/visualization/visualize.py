@@ -1,58 +1,45 @@
 ########################################## 
-###  
+###  This file uses StreamLit to create a data visualisation dashboard
 ##########################################
 
-
-
-
-import streamlit as st
+from sqlalchemy import create_engine
 import pandas as pd
 import psycopg2
+import streamlit as st
 import plotly.express as px
-
 
 # Function to load external CSS file
 def load_css():
-    with open("style.css", "r") as f:
-        css = f.read()
-    st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
-
-# Load CSS
-load_css()
-
-
-# Database connection
-def connect_db():
     try:
-        conn = psycopg2.connect(
-            dbname="nyc_datamart",
-            user="postgres",
-            password="admin",
-            host="localhost",
-            port="15432"
-        )
-        return conn
-    except Exception as e:
-        st.error(f"Error connecting to database: {e}")
-        return None
+        with open("style.css", "r") as f:
+            css = f.read()
+        st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.warning("CSS file not found.")
 
-# Query function
+
+
+# SQLAlchemy Database Connection
+def get_db_connection():
+    # PostgreSQL connection string
+    connection_string = "postgresql+psycopg2://postgres:admin@localhost:15435/nyc_datamart"
+    engine = create_engine(connection_string)
+    return engine.connect()
+
+# Query function using SQLAlchemy
 def fetch_data(query):
-    conn = connect_db()
-    if conn:
-        try:
-            return pd.read_sql_query(query, conn)
-        except Exception as e:
-            st.error(f"Error fetching data: {e}")
-        finally:
+    try:
+        conn = get_db_connection()  # Using SQLAlchemy engine connection
+        return pd.read_sql_query(query, conn)
+    except Exception as e:
+        st.error(f"Error fetching data: {e}")
+        return pd.DataFrame()
+    finally:
+        if conn:
             conn.close()
-    return pd.DataFrame()
 
-# Main dashboard
-def main():
-    st.title("Visualization Dashboard")
-    st.sidebar.title("Filters")
-
+# Main dashboard function (remains unchanged)
+def visualize():
     # Filter Inputs
     vehicle_types = fetch_data("SELECT DISTINCT vehicul_type FROM fact_trip")
     vehicle_type = st.sidebar.selectbox("Vehicle Type", vehicle_types["vehicul_type"].tolist() if not vehicle_types.empty else ["All"])
@@ -64,24 +51,25 @@ def main():
     if vehicle_type != "All":
         where_clauses.append(f"vehicul_type = '{vehicle_type}'")
     if start_date:
-        where_clauses.append(f"pickup_datetime >= '{start_date}'")
+        where_clauses.append(f"CAST(dim_datetime.pickup_datetime AS DATE) >= '{start_date.strftime('%Y-%m-%d')}'")
     if end_date:
-        where_clauses.append(f"pickup_datetime <= '{end_date}'")
+        where_clauses.append(f"CAST(dim_datetime.pickup_datetime AS DATE) <= '{end_date.strftime('%Y-%m-%d')}'")
+    
     where_clause = " AND ".join(where_clauses)
     where_clause = f"WHERE {where_clause}" if where_clauses else ""
 
-    # Fetch data
+    # Modified query with proper casting for TEXT fields
     query = f"""
         SELECT 
             fact_trip.trip_id, 
             fact_trip.vehicul_type, 
-            dim_datetime.pickup_datetime, 
-            dim_datetime.dropoff_datetime, 
-            dim_trip_details.trip_distance, 
-            dim_fare.total_fare,
-            dim_fare.fare, 
-            dim_fare.tolls_amount, 
-            dim_fare.tip_amount, 
+            CAST(dim_datetime.pickup_datetime AS TIMESTAMP) AS pickup_datetime, 
+            CAST(dim_datetime.dropoff_datetime AS TIMESTAMP) AS dropoff_datetime, 
+            CAST(dim_trip_details.trip_distance AS FLOAT) AS trip_distance,
+            CAST(dim_fare.total_fare AS FLOAT) AS total_fare,
+            CAST(dim_fare.fare AS FLOAT) AS fare,
+            CAST(dim_fare.tolls_amount AS FLOAT) AS tolls_amount,
+            CAST(dim_fare.tip_amount AS FLOAT) AS tip_amount,
             dim_trip_details.passenger_count, 
             dim_trip_details.trip_type,
             dim_flags.shared_request_flag, 
@@ -106,10 +94,14 @@ def main():
     if data.empty:
         st.warning("No data available for the selected filters.")
     else:
+        # Convert date columns to datetime
+        data["pickup_datetime"] = pd.to_datetime(data["pickup_datetime"], errors="coerce")
+        data["dropoff_datetime"] = pd.to_datetime(data["dropoff_datetime"], errors="coerce")
+
+        # General Metrics
         st.write("### Data Preview")
         st.dataframe(data)
 
-        # General Metrics
         st.write("### General Metrics")
         st.metric("Total Trips", len(data))
         st.metric("Average Fare", round(data["total_fare"].mean(), 2))
@@ -117,7 +109,6 @@ def main():
 
         # Visualization 1: Trips Over Time
         st.write("### Trips Over Time")
-        data["pickup_datetime"] = pd.to_datetime(data["pickup_datetime"])
         trips_over_time = data.groupby(data["pickup_datetime"].dt.date).size().reset_index(name="Number of Trips")
         fig_trips_time = px.line(trips_over_time, x="pickup_datetime", y="Number of Trips", title="Trips Over Time")
         st.plotly_chart(fig_trips_time)
@@ -158,5 +149,8 @@ def main():
         fig_vendor = px.histogram(data, x="VendorID", title="Trips by Vendor")
         st.plotly_chart(fig_vendor)
 
+
+
+
 if __name__ == "__main__":
-    main()
+    visualize()

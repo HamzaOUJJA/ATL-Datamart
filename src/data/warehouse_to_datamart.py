@@ -1,56 +1,20 @@
 ########################################## 
 ###  This file grabs all data tables from the warehouse to the nyc_datamart db
-###  then merges all tables into one table "warehouse_data". Once merged they are deleted
 ##########################################
-
 
 import psycopg2
 from psycopg2 import sql
-
-
-# Connection details for warehouse and datamart
-warehouse_conn = psycopg2.connect(
-    dbname="nyc_warehouse",
-    user="postgres",
-    password="admin",
-    host="localhost",
-    port="15432"
-)
-mart_conn = psycopg2.connect(
-    dbname="nyc_datamart",
-    user="postgres",
-    password="admin",
-    host="localhost",
-    port="15435"
-)
-
-
-def execute_sql_file(connection, file_path):
-    with connection.cursor() as cursor, open(file_path, 'r') as sql_file:
-        sql = sql_file.read()
-        cursor.execute(sql)
-        connection.commit()
-        cursor.close()
-        connection.close()
-
-def unify_data():
-    print('Merging data!')
-    try:
-        # Unify all warehouse tables into one and then delete the tables
-        execute_sql_file(mart_conn, '../../sql/unify_data.sql')
-        return 1
-    except Exception as e:
-        print("\033[1;31m ###### Problem Occured While Unifying Data In Datamart ######\033[0m")
-        print(e)
-        return 0
-
+from connection_config import connect_Datamart, connect_Warehouse
 
 
 
 def warehouse_to_datamart():
-    print('Moving data from warehouse to nyc_datamart!')
+    print('Moving data from warehouse to datamart!')
     
     try:
+        mart_conn = connect_Datamart()
+        warehouse_conn = connect_Warehouse()
+        
         warehouse_cursor = warehouse_conn.cursor()
         mart_cursor = mart_conn.cursor()
 

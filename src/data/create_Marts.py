@@ -3,24 +3,13 @@
 ###  unified data table "warehouse_data"
 ##########################################
 
-import psycopg2
-from psycopg2 import sql
-
-
-# Connection details for warehouse and datamart
-mart_conn = psycopg2.connect(
-    dbname="nyc_datamart",
-    user="postgres",
-    password="admin",
-    host="localhost",
-    port="15435"
-)
+from connection_config import connect_Datamart
 
 
 def create_Marts():
     print('Creating Marts!')
     try:
-        # Create Data Marts
+        mart_conn = connect_Datamart()
         execute_sql_file(mart_conn, '../../sql/creation.sql')
         return 1
     except Exception as e:
@@ -33,7 +22,7 @@ def create_Marts():
 def insert_Marts():
     print('Inserting data to marts!')
     try:
-        # Insert Data Marts With Data From "warehouse_data" table
+        mart_conn = connect_Datamart()
         execute_sql_file(mart_conn, '../../sql/insertion.sql')
         mart_conn.close()
         return 1

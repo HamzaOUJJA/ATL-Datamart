@@ -13,15 +13,17 @@ import sys
 
 
 sys.path.insert(1, '../../src/data')
-sys.path.insert(1, '../../src/visualisation')
+sys.path.insert(1, '../../src/visualization')
 
 
 from grab_Data_From_Source      import grab_Data_From_Source
 from grab_Data_From_MinIO       import grab_Data_From_MinIO
 from write_Data_To_MinIO        import write_Data_To_MinIO
 from write_Data_To_Warehouse    import write_Data_To_Warehouse
-from warehouse_to_datamart      import warehouse_to_datamart, unify_data
+from warehouse_to_datamart      import warehouse_to_datamart
+from unify_data                 import unify_data
 from create_Marts               import create_Marts, insert_Marts
+from visualize                  import visualize
 
 
 
@@ -30,20 +32,22 @@ from create_Marts               import create_Marts, insert_Marts
 def main():
     try:
         #clean_local_folder()
-        #grab_Data_From_Source([2024], [10])       
+        #grab_Data_From_Source([2024], [10])
         #write_Data_To_MinIO()   
         #clean_local_folder()
         #grab_Data_From_MinIO()
-        write_Data_To_Warehouse()
-        warehouse_to_datamart()
-        unify_data()
-        create_Marts()
-        insert_Marts()
+        #write_Data_To_Warehouse()
+        #warehouse_to_datamart()
+        #unify_data()
+        #create_Marts()
+        #insert_Marts()
+        pass
+
     except Exception as e:
-        print("\033[1;31m ###### Exception occured in the Main ######\033[0m")
+        print("\033[1;31m ###### Exception Occured In The Main ######\033[0m")
         print(e)
     pass  
-    
+
 
 
                         
