@@ -1,4 +1,4 @@
---32
+--37
 DROP TABLE IF EXISTS warehouse_data;
 
 CREATE TABLE warehouse_data (

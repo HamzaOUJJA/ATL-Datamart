@@ -30,8 +30,51 @@
 
 /* Styling for plots */
 .stPlotlyChart {
+    margin-left: 0px;
+    width: 100%;
     margin-top: 20px;
-    background-color: #f7f7f9;
+    background-color: #08de48;
     border-radius: 10px;
     padding: 10px;
+}
+
+
+
+
+
+
+
+/* Sidebar Styles */
+.stSidebar {
+    position: absolute; /* Keeps it independent from .stMain */
+    top: 0;
+    left: -300px; /* Initially hidden to the left */
+    width: 300px; /* Set the width of the sidebar */
+    height: 100%;
+    background-color: #f0f0f5; /* Example background color */
+    z-index: 10; /* Ensures it overlays other elements */
+    transition: left 0.3s ease; /* Smooth slide-in/out effect */
+}
+
+/* Sidebar shown (add this class dynamically when the sidebar is toggled on) */
+.stSidebar--visible {
+    left: 0; /* Move the sidebar into view */
+}
+
+/* App View Container */
+.stAppViewContainer {
+    position: relative; /* Ensures .stMain stays inside the container */
+    width: 100%;
+    height: 100%; /* Make it fill the container */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+/* Main Content Area */
+.stMain {
+    width: 100%; /* Full width of the parent container */
+    height: 100%; /* Full height of the parent container */
+    position: relative; /* Ensures independence from .stSidebar */
+    background-color: #ffffff; /* Example background color */
+    z-index: 1; /* Stays below the sidebar */
+    transition: margin-left 0.3s ease; /* Smooth transition if needed */
 }

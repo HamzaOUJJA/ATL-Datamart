@@ -1,4 +1,3 @@
-version: '3.7'
 
 x-airflow-common:
   &airflow-common
@@ -42,21 +41,21 @@ x-airflow-common:
 
 services:
 
-  minio:
-    hostname: minio
-    image: "minio/minio"
-    container_name: minio
-    ports:
-      - "9001:9001"
-      - "9000:9000"
-    command: [ "server", "/data", "--console-address", ":9001" ]
-    volumes:
-      - ./minio:/data
-    environment:
-      - MINIO_ROOT_USER=minio
-      - MINIO_ROOT_PASSWORD=minio123
-    networks:
-      - spark_network
+  # minio:
+  #   hostname: minio
+  #   image: "minio/minio"
+  #   container_name: minio
+  #   ports:
+  #     - "9001:9001"
+  #     - "9000:9000"
+  #   command: [ "server", "/data", "--console-address", ":9001" ]
+  #   volumes:
+  #     - ./minio:/data
+  #   environment:
+  #     - MINIO_ROOT_USER=minio
+  #     - MINIO_ROOT_PASSWORD=minio123
+  #   networks:
+  #     - spark_network
   
   data-warehouse:
     image: postgres:latest
