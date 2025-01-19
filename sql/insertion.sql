@@ -1,3 +1,4 @@
+
 -- Insert data into dim_location
 INSERT INTO dim_location ("location_id", "trip_id", "PULocationID", "DOLocationID")
 SELECT DISTINCT

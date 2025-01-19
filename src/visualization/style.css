@@ -6,7 +6,9 @@
     text-align: center;
     font-weight: bold;
 }
-
+body {
+    background-color: rgb(74, 182, 237);
+}
 /* Sidebar style */
 .css-1d391kg {
     background-color: #f0f0f5;
@@ -77,4 +79,8 @@
     background-color: #ffffff; /* Example background color */
     z-index: 1; /* Stays below the sidebar */
     transition: margin-left 0.3s ease; /* Smooth transition if needed */
+}
+.stMainBlockContainer {
+    width: 100%;
+    max-width: 80%;
 }

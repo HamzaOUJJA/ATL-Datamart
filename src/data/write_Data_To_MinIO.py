@@ -9,8 +9,8 @@ import os
 
 
 def write_Data_To_MinIO():
-    print('Uploading to MinIO!')
-    
+    print("\033[1;32m        ########    Uploading Data To MinIO!\033[0m")
+
     minioClient = Minio( # Client MinIO 
         "localhost:9000",
         secure=False,
@@ -43,7 +43,7 @@ def write_Data_To_MinIO():
                     return 0
         return 1
     except Exception as e:
-        print("\033[1;31m ###### Problem Occured While Uploading Data To MinIO ######\033[0m")
+        print("\033[1;31m        ########    Problem Occured While Uploading Data To MinIO\033[0m")
         print(e)
         return 0
 
@@ -54,6 +54,4 @@ def clean_minio_bucket(minio_client, bucket):
         objects = minio_client.list_objects(bucket, recursive=True)
         for obj in objects:
             minio_client.remove_object(bucket, obj.object_name)
-        print(f"Bucket '{bucket}' cleaned.")
-    else:
-        print(f"Bucket '{bucket}' does not exist. No cleaning required.")
+        print(f"\033[1;32m        ########    Bucket '{bucket}' cleaned.\033[0m")

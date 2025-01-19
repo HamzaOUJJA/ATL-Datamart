@@ -41,10 +41,13 @@ def fetch_data(query):
 # Main dashboard function (remains unchanged)
 def visualize():
     # Filter Inputs
+    st.markdown('<div class="custom-selectbox">', unsafe_allow_html=True)
     vehicle_types = fetch_data("SELECT DISTINCT vehicul_type FROM fact_trip")
     vehicle_type = st.sidebar.selectbox("Vehicle Type", vehicle_types["vehicul_type"].tolist() if not vehicle_types.empty else ["All"])
     start_date = st.sidebar.date_input("Start Date")
     end_date = st.sidebar.date_input("End Date")
+    st.markdown('</div>', unsafe_allow_html=True)
+
 
     # Build query with filters
     where_clauses = []

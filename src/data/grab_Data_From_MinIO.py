@@ -12,6 +12,7 @@ from minio import Minio
 
 
 def grab_Data_From_MinIO():
+    print("\033[1;32m        ########    Downloading Data From MinIO!\033[0m")
     try:
         # Initialize MinIO client
         minio_client = Minio(
@@ -56,10 +57,10 @@ def grab_Data_From_MinIO():
                     
                     # Calculate and display progress
                     progress = (downloaded / file_size) * 100
-                    print(f"\r\033[32mDownloading From MinIO : {obj.object_name} : {progress:.2f}%\033[0m", end="")
+                    print(f"\r\033[38;5;214mDownloading From MinIO : {obj.object_name} : {progress:.2f}%\033[0m", end="")
             print()
         return 1
     except Exception as e:
-        print("\033[1;31m ###### Problem Occured While Downloading Data From MinIO ######\033[0m")
+        print("\033[1;31m        ########    Problem Occured While Downloading Data From MinIO\033[0m")
         print(e)
         return 0 
