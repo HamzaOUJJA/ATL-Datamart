@@ -45,7 +45,7 @@ def write_Data_To_Warehouse():
                     print(f"\r\033[38;5;214mUploading {filename}: {percentage:.3f}%\033[0m", end='')
 
                     # Convert all columns to string for compatibility
-                    # chunk = chunk.astype(str)
+                    chunk = chunk.astype(str)
 
                     # Append the chunk to the database
                     chunk.to_sql(table_name, engine, if_exists='append', index=False)

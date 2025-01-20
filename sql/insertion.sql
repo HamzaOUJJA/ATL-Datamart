@@ -93,3 +93,8 @@ SELECT
     (SELECT "flags_id"      FROM dim_flags WHERE "trip_id" = wd."trip_id" LIMIT 1) AS "flags_id",
     (SELECT "base_id"       FROM dim_base WHERE "trip_id" = wd."trip_id" LIMIT 1) AS "base_id"
 FROM warehouse_data wd;
+
+
+
+
+DROP TABLE IF EXISTS warehouse_data;

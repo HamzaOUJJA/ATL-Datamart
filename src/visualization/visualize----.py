@@ -133,6 +133,11 @@ def visualize():
         fig_trip_type = px.pie(data, names="trip_type", title="Trip Type Distribution")
         st.plotly_chart(fig_trip_type)
 
+        # Visualization 4: Trip Type Distribution
+        st.write("### Trip Type Distribution")
+        fig_trip_type = px.pie(data, names="trip_type", title="Trip Type Distribution")
+        st.plotly_chart(fig_trip_type)
+
         # Visualization 5: Flags Distribution
         st.write("### Flags Distribution")
         flag_columns = ["shared_request_flag", "shared_match_flag", "wav_request_flag", "wav_match_flag"]
@@ -152,6 +157,27 @@ def visualize():
         fig_vendor = px.histogram(data, x="VendorID", title="Trips by Vendor")
         st.plotly_chart(fig_vendor)
 
+
+        # Group by PULocationID to count the number of trips
+        trips_per_location = data.groupby('PULocationID').size().reset_index(name='trip_count')
+
+        # Bar Chart for Number of Trips per PULocationID
+        st.write("### Number of Trips per PULocationID")
+        fig_pu_bar = px.bar(
+            trips_per_location,
+            x="PULocationID",
+            y="trip_count",
+            title="Number of Trips per PULocationID",
+            labels={"PULocationID": "Pickup Location ID", "trip_count": "Number of Trips"},
+            color="trip_count",  # Add color based on trip count
+            text="trip_count"    # Show trip count on the bars
+        )
+        fig_pu_bar.update_layout(
+            xaxis=dict(type='category'),  # Make x-axis categorical
+            yaxis_title="Number of Trips",  # Label y-axis
+            xaxis_title="Pickup Location ID"  # Label x-axis
+        )
+        st.plotly_chart(fig_pu_bar)
 
 
 

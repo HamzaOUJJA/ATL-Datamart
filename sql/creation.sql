@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS fact_trip, dim_location, dim_datetime, dim_flags, dim_base, dim_trip_details, dim_fare;
+DROP TABLE IF EXISTS fact_trip, dim_location, dim_datetime, dim_flags, dim_base, dim_trip_details, dim_fare, warehouse_data;
 
 CREATE TABLE fact_trip (
     "trip_id"               SERIAL PRIMARY KEY,  

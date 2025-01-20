@@ -6,9 +6,7 @@
     text-align: center;
     font-weight: bold;
 }
-body {
-    background-color: rgb(74, 182, 237);
-}
+
 /* Sidebar style */
 .css-1d391kg {
     background-color: #f0f0f5;
@@ -32,10 +30,10 @@ body {
 
 /* Styling for plots */
 .stPlotlyChart {
+    
     margin-left: 0px;
     width: 100%;
     margin-top: 20px;
-    background-color: #08de48;
     border-radius: 10px;
     padding: 10px;
 }
@@ -46,17 +44,8 @@ body {
 
 
 
-/* Sidebar Styles */
-.stSidebar {
-    position: absolute; /* Keeps it independent from .stMain */
-    top: 0;
-    left: -300px; /* Initially hidden to the left */
-    width: 300px; /* Set the width of the sidebar */
-    height: 100%;
-    background-color: #f0f0f5; /* Example background color */
-    z-index: 10; /* Ensures it overlays other elements */
-    transition: left 0.3s ease; /* Smooth slide-in/out effect */
-}
+
+
 
 /* Sidebar shown (add this class dynamically when the sidebar is toggled on) */
 .stSidebar--visible {
@@ -73,14 +62,55 @@ body {
 
 /* Main Content Area */
 .stMain {
-    width: 100%; /* Full width of the parent container */
-    height: 100%; /* Full height of the parent container */
-    position: relative; /* Ensures independence from .stSidebar */
-    background-color: #ffffff; /* Example background color */
-    z-index: 1; /* Stays below the sidebar */
-    transition: margin-left 0.3s ease; /* Smooth transition if needed */
+    width: 100%; 
+    height: 100%;
+    max-width: 100%; 
 }
 .stMainBlockContainer {
     width: 100%;
-    max-width: 80%;
+    height: 100%;
+    max-width: 100%;
+    padding: 10px;
+
+}
+
+
+
+.stAppHeader{
+    display: none;
+}
+.eiemyj0 {
+    width: 100%;
+
+}
+
+h1{
+    text-align: center;
+    font-size: 20px;
+}
+
+.stVerticalBlock{
+    gap: 0px;
+}
+
+.stPlotlyChart {
+    padding: 0px;
+}
+.svg-container {
+    margin-bottom: -50px;
+}
+.stHorizontalBlock {
+    gap: 0px;
+}
+.st-emotion-cache-v32dg4 {
+    margin-top: -70px;
+    margin-bottom: -30px;
+}
+html {
+    background-color: #4CAF50;
+}
+.stExpander {
+    background-color: #b7aeae;
+    border-radius: 10px;
+    font-size: 40px;
 }

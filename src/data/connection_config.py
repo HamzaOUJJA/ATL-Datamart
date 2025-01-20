@@ -23,7 +23,7 @@ def connect_Warehouse():
         return warehouse_conn
     except Exception as e:
         st.error(f"Error connecting to database: {e}")
-        print("\033[1;31m ###### Error Connecting to Warehouse! ######\033[0m")
+        print("\033[1;31m        ######    Error Connecting to Warehouse! ######\033[0m")
         print(e)
         return None
     
@@ -40,7 +40,7 @@ def connect_Datamart():
         return mart_conn
     except Exception as e:
         st.error(f"Error connecting to database: {e}")
-        print("\033[1;31m ###### Error Connecting to Datamart! ######\033[0m")
+        print("\033[1;31m        ######    Error Connecting to Datamart! ######\033[0m")
         print(e)
         return None
 
